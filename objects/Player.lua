@@ -33,6 +33,12 @@ end
 function Player:draw()
   love.graphics.setColor(1, 0, 0);
   love.graphics.circle('line', self.x, self.y, 10);
+  love.graphics.line(
+    self.x,
+    self.y,
+    self.x + 2 * self.width * math.cos(self.rotation),
+    self.y + 2 * self.width * math.sin(self.rotation)
+  );
   love.graphics.setColor(1, 1, 1);
 end
 
