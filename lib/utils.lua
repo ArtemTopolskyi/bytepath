@@ -11,7 +11,18 @@ local squared_distance = function(x1, y1, x2, y2)
   return (x1 - x2) ^ 2 + (y1 - y2) ^ 2;
 end
 
+local random = function(min, max)
+  local min, max = min or 0, max or 1
+
+  return (
+    min > max
+      and (love.math.random() * (min - max) + max)
+      or (love.math.random() * (max - min) + min)
+  );
+end
+
 return {
   uuid = uuid,
   squared_distance = squared_distance,
+  random = random,
 };

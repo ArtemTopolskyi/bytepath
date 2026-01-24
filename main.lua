@@ -7,7 +7,7 @@ SceneManager = require "core/SceneManager";
 Area = require "core/Area";
 GameObject = require "core/GameObject";
 
-fn = require "lib/moses";
+fn = require "lib/functional";
 utils = require "lib/utils";
 
 
