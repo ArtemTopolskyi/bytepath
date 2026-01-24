@@ -4,7 +4,6 @@ Input = require "lib/input";
 Timer = require "lib/timer";
 
 SceneManager = require "core/SceneManager";
-Scene = require "core/Scene";
 Area = require "core/Area";
 GameObject = require "core/GameObject";
 
@@ -12,10 +11,26 @@ fn = require "lib/moses";
 utils = require "lib/utils";
 
 
+local StageScene = require "scenes/Stage";
+
 local scene_manager;
 
+local resize = function(scale)
+  love.window.setMode(GAME_WIDTH * scale, GAME_HEIGHT * scale);
+  SCALE_X = scale;
+  SCALE_Y = scale;
+end
+
 function love.load()
+  love.graphics.setDefaultFilter('nearest');
+  love.graphics.setLineStyle('rough');
+
+  resize(3);
+
   scene_manager = SceneManager();
+
+  scene_manager:add_scene('Stage', StageScene);
+  scene_manager:switch_scene('Stage');
 end
 
 function love.update(dt)
