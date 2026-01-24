@@ -2,6 +2,7 @@ Object = require "lib/classic";
 
 Input = require "lib/input";
 Timer = require "lib/timer";
+Camera = require "lib/camera";
 
 SceneManager = require "core/SceneManager";
 Area = require "core/Area";
