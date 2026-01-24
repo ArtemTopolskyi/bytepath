@@ -1,7 +1,7 @@
 GAME_WIDTH = 480
 GAME_HEIGHT = 270
-SCALE_X = 1
-SCALE_Y = 1
+SCALE_X = 3
+SCALE_Y = 3
 
 function love.conf(t)
     t.identity = nil                   -- The name of the save directory (string)

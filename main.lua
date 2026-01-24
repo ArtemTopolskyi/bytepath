@@ -14,14 +14,6 @@ utils = require "lib/utils";
 
 local StageScene = require "scenes/Stage";
 
-local scene_manager;
-
-local resize = function(scale)
-  love.window.setMode(GAME_WIDTH * scale, GAME_HEIGHT * scale);
-  SCALE_X = scale;
-  SCALE_Y = scale;
-end
-
 function love.load()
   input = Input();
   input:bind('a', 'move_left');
@@ -30,7 +22,7 @@ function love.load()
   love.graphics.setDefaultFilter('nearest');
   love.graphics.setLineStyle('rough');
 
-  resize(3);
+  love.window.setMode(GAME_WIDTH * SCALE_X, GAME_HEIGHT * SCALE_Y);
 
   scene_manager = SceneManager();
 
