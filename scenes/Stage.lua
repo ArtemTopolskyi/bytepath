@@ -4,12 +4,14 @@ local Stage = Object:extend();
 
 function Stage:new()
   self.area = Area(self);
+  self.area:add_physics_world();
+
   self.main_canvas = love.graphics.newCanvas(GAME_WIDTH, GAME_HEIGHT);
   self.camera = Camera(GAME_WIDTH / 2, GAME_HEIGHT / 2);
 
-  local player = Player(self.area, GAME_WIDTH / 2, GAME_HEIGHT / 2);
+  self.player = Player(self.area, GAME_WIDTH / 2, GAME_HEIGHT / 2);
 
-  self.area:add_game_object(player);
+  self.area:add_game_object(self.player);
 end
 
 function Stage:update(dt)

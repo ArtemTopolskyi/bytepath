@@ -5,10 +5,32 @@ function Area:new(scene)
   self.game_objects = {};
 end
 
+function Area:update(dt)
+  if self.world then self.world:update(dt) end;
+
+  for i = #self.game_objects, 1, -1 do
+    local game_object = self.game_objects[i];
+
+    game_object:update(dt);
+
+    if game_object.dead then
+      table.remove(self.game_objects, i);
+    end
+  end
+end
+
+function Area:draw()
+  for _, game_object in ipairs(self.game_objects) do game_object:draw() end
+end
+
 function Area:add_game_object(game_object)
   table.insert(self.game_objects, game_object);
 
   return game_object;
+end
+
+function Area:add_physics_world(x_gravity, y_gravity, can_sleep)
+  self.world = love.physics.newWorld(x_gravity, y_gravity, can_sleep);
 end
 
 function Area:get_game_objects(filter_fn)
@@ -76,22 +98,6 @@ function Area:get_closest_object(x, y, radius, labels)
   end
 
   return current_closest_object;
-end
-
-function Area:update(dt)
-  for i = #self.game_objects, 1, -1 do
-    local game_object = self.game_objects[i];
-
-    game_object:update(dt);
-
-    if game_object.dead then
-      table.remove(self.game_objects, i);
-    end
-  end
-end
-
-function Area:draw()
-  for _, game_object in ipairs(self.game_objects) do game_object:draw() end
 end
 
 return Area;

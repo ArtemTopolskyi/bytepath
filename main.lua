@@ -23,6 +23,10 @@ local resize = function(scale)
 end
 
 function love.load()
+  input = Input();
+  input:bind('a', 'move_left');
+  input:bind('d', 'move_right');
+
   love.graphics.setDefaultFilter('nearest');
   love.graphics.setLineStyle('rough');
 

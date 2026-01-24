@@ -15,6 +15,7 @@ end
 
 function GameObject:update(dt)
   if self.timer then self.timer:update(dt) end
+  if self.body then self.x, self.y = self.body:getPosition() end;
 end
 
 function GameObject:draw()
