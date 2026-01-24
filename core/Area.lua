@@ -11,6 +11,73 @@ function Area:add_game_object(game_object)
   return game_object;
 end
 
+function Area:get_game_objects(filter_fn)
+  if not filter_fn then return self.game_objects end;
+
+  local game_objects = {};
+
+  for _, current_game_object in ipairs(self.game_objects) do
+    if filter_fn(current_game_object) then
+      table.insert(game_objects, current_game_object)
+    end
+  end
+
+  return game_objects;
+end
+
+function Area:query_circle_area(x, y, radius, labels)
+  local queried_game_objects;
+
+  local squared_radius = radius ^ 2;
+
+  local filtered_game_objects = (
+    #labels > 0
+      and self:get_game_objects(function(game_object) return fn.contains(labels, game_object.label) end)
+      or self.game_objects
+  );
+
+  for _, current_game_object in ipairs(filtered_game_objects) do
+    local squared_distance_from_circle_center_to_object = utils.squared_distance(
+      current_game_object.x, current_game_object.y, x, y
+    );
+
+    if squared_distance_from_circle_center_to_object <= squared_radius then
+      table.insert(queried_game_objects, current_game_object);
+    end
+  end
+
+  return queried_game_objects;
+end
+
+function Area:get_closest_object(x, y, radius, labels)
+  local current_closest_object = nil;
+  local smallest_squared_distance = math.maxinteger;
+
+  local squared_radius = radius ^ 2;
+
+  local filtered_game_objects = (
+    #labels > 0
+      and self:get_game_objects(function(game_object) return fn.contains(labels, game_object.label) end)
+      or self.game_objects
+  );
+
+  for _, current_game_object in ipairs(filtered_game_objects) do
+    local squared_distance_from_circle_center_to_object = utils.squared_distance(
+      current_game_object.x, current_game_object.y, x, y
+    );
+
+    if (
+      squared_distance_from_circle_center_to_object < smallest_squared_distance
+        and squared_distance_from_circle_center_to_object < squared_radius
+    ) then
+      current_closest_object = current_game_object;
+      smallest_squared_distance = squared_distance_from_circle_center_to_object;
+    end
+  end
+
+  return current_closest_object;
+end
+
 function Area:update(dt)
   for i = #self.game_objects, 1, -1 do
     local game_object = self.game_objects[i];

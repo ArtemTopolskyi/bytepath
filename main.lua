@@ -2,12 +2,14 @@ Object = require "lib/classic";
 
 Input = require "lib/input";
 Timer = require "lib/timer";
+
 SceneManager = require "core/SceneManager";
 Scene = require "core/Scene";
 Area = require "core/Area";
 GameObject = require "core/GameObject";
 
-require "lib/utils";
+fn = require "lib/moses";
+utils = require "lib/utils";
 
 
 local scene_manager;
