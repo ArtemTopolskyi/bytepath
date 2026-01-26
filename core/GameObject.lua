@@ -21,4 +21,29 @@ end
 function GameObject:draw()
 end
 
+function GameObject:destroy()
+  if self.timer then
+    self.timer:clear();
+  end
+
+  if self.fixture then
+    self.fixture:setUserData(nil);
+    self.fixture:destroy();
+    self.fixture = nil;
+  end
+
+  if self.shape then
+    self.shape:release();
+    self.shape = nil;
+  end
+
+  if self.body then
+    self.body:destroy();
+    self.body = nil;
+  end
+
+  self.area = nil;
+  self.timer = nil;
+end
+
 return GameObject;

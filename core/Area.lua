@@ -14,6 +14,7 @@ function Area:update(dt)
     game_object:update(dt);
 
     if game_object.dead then
+      game_object:destroy();
       table.remove(self.game_objects, i);
     end
   end
@@ -48,7 +49,7 @@ function Area:get_game_objects(filter_fn)
 end
 
 function Area:query_circle_area(x, y, radius, labels)
-  local queried_game_objects;
+  local queried_game_objects = {};
 
   local squared_radius = radius ^ 2;
 

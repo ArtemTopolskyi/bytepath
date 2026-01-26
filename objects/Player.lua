@@ -1,7 +1,7 @@
 local Player = GameObject:extend();
 
 function Player:new(area, x, y)
-  self.super.new(self, area, 'Player', x, y);
+  Player.super.new(self, area, 'Player', x, y);
 
   self.width, self.height = 12, 12;
   self.speed = 150;
@@ -15,7 +15,7 @@ function Player:new(area, x, y)
 end
 
 function Player:update(dt)
-  self.super.update(self, dt);
+  Player.super.update(self, dt);
 
   if input:down('move_left') then self.rotation = self.rotation - self.rotation_velocity * dt end;
   if input:down('move_right') then self.rotation = self.rotation + self.rotation_velocity * dt end;
