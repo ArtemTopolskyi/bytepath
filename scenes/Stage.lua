@@ -35,4 +35,12 @@ function Stage:draw()
   love.graphics.setBlendMode('alpha');
 end
 
+function Stage:destroy()
+  self.area:destroy();
+  self.area = nil;
+  self.player = nil;
+  self.main_canvas = nil;
+  self.camera = nil;
+end
+
 return Stage;

@@ -26,6 +26,10 @@ function SceneManager:switch_scene(name, ...)
     error("Scene " .. name .. " not found");
   end
 
+  if self.current_scene and self.current_scene.destroy then
+    self.current_scene:destroy();
+  end
+
   self.current_scene = self.scenes[name](...);
 end
 

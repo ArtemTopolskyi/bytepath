@@ -30,6 +30,22 @@ function Area:add_game_object(game_object)
   return game_object;
 end
 
+function Area:destroy()
+  for i = #self.game_objects, 1, -1 do
+    local game_object = self.game_objects[i]
+
+    game_object:destroy()
+    table.remove(self.game_objects, i)
+  end
+
+  self.game_objects = {}
+
+  if self.world then
+    self.world:destroy()
+    self.world = nil
+  end
+end
+
 function Area:add_physics_world(x_gravity, y_gravity, can_sleep)
   self.world = love.physics.newWorld(x_gravity, y_gravity, can_sleep);
 end
