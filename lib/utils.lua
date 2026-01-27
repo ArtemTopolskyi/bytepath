@@ -21,8 +21,25 @@ local random = function(min, max)
   );
 end
 
+local push_rotate = function(x, y, r)
+  love.graphics.push()
+  love.graphics.translate(x, y)
+  love.graphics.rotate(r or 0)
+  love.graphics.translate(-x, -y)
+end
+
+local push_rotate_scale = function(x, y, r, sx, sy)
+  love.graphics.push()
+  love.graphics.translate(x, y)
+  love.graphics.rotate(r or 0)
+  love.graphics.scale(sx or 1, sy or 1)
+  love.graphics.translate(-x, -y)
+end
+
 return {
   uuid = uuid,
   squared_distance = squared_distance,
   random = random,
+  push_rotate = push_rotate,
+  push_rotate_scale = push_rotate_scale,
 };

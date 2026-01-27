@@ -2,7 +2,7 @@ local GameObject = Object:extend();
 
 function GameObject:new(area, label, x, y, options)
   local options = options or {};
-  if options then for key, value in ipairs(options) do self[key] = value end end
+  if options then for key, value in pairs(options) do self[key] = value end end
 
   self.area = area;
   self.label = label;

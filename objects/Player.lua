@@ -1,3 +1,5 @@
+local ShootEffect = require "objects/ShootEffect";
+
 local Player = GameObject:extend();
 
 function Player:new(area, x, y)
@@ -11,7 +13,13 @@ function Player:new(area, x, y)
   self.max_velocity = 150;
   self.acceleration = 100;
 
+  self.fire_rate = 0.24;
+
   self:add_to_physics_world();
+
+  self.timer:every(self.fire_rate, function()
+    self:shoot();
+  end)
 end
 
 function Player:update(dt)
@@ -40,6 +48,19 @@ function Player:draw()
     self.y + 2 * self.width * math.sin(self.rotation)
   );
   love.graphics.setColor(1, 1, 1);
+end
+
+function Player:shoot()
+  local offset = 1.2 * self.width;
+
+  local shoot_effect = ShootEffect(
+    self.area,
+    self.x + offset * math.cos(self.rotation),
+    self.y + offset * math.sin(self.rotation),
+    { player = self, offset = offset }
+  );
+
+  self.area:add_game_object(shoot_effect);
 end
 
 function Player:move_camera_after_player()
