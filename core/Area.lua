@@ -3,15 +3,17 @@ local Area = Object:extend();
 function Area:new(scene)
   self.scene = scene;
   self.game_objects = {};
+
+  self.time_scale = 1.0;
 end
 
 function Area:update(dt)
-  if self.world then self.world:update(dt) end;
+  if self.world then self.world:update(dt * self.time_scale) end;
 
   for i = #self.game_objects, 1, -1 do
     local game_object = self.game_objects[i];
 
-    game_object:update(dt);
+    game_object:update(dt * self.time_scale);
 
     if game_object.dead then
       game_object:destroy();
