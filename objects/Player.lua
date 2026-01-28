@@ -1,4 +1,5 @@
 local ShootEffect = require "objects/ShootEffect";
+local Projectile = require "objects/Projectile";
 
 local Player = GameObject:extend();
 
@@ -34,8 +35,6 @@ function Player:update(dt)
     self.velocity * math.cos(self.rotation),
     self.velocity * math.sin(self.rotation)
   );
-
-  self:move_camera_after_player();
 end
 
 function Player:draw()
@@ -60,7 +59,15 @@ function Player:shoot()
     { player = self, offset = offset }
   );
 
+  local projectile = Projectile(
+    self.area,
+    self.x + 1.5 * offset * math.cos(self.rotation),
+    self.y + 1.5 * offset * math.sin(self.rotation),
+    { direction = self.rotation }
+  );
+
   self.area:add_game_object(shoot_effect);
+  self.area:add_game_object(projectile);
 end
 
 function Player:move_camera_after_player()

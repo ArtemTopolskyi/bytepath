@@ -8,6 +8,10 @@ SceneManager = require "core/SceneManager";
 Area = require "core/Area";
 GameObject = require "core/GameObject";
 
+local Constants = require "lib/constants";
+
+COLOR = Constants.COLOR;
+
 fn = require "lib/functional";
 utils = require "lib/utils";
 

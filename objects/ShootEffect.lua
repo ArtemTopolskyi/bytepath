@@ -25,6 +25,8 @@ end
 
 function ShootEffect:draw()
   utils.push_rotate(self.x, self.y, self.player.rotation + math.pi / 4);
+
+  love.graphics.setColor(COLOR.DEFAULT);
   love.graphics.rectangle(
     'fill',
     self.x - self.width / 2,
@@ -32,6 +34,7 @@ function ShootEffect:draw()
     self.width,
     self.width
   );
+
   love.graphics.pop();
 end
 
