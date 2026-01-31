@@ -25,7 +25,7 @@ end
 
 function Projectile:draw()
   love.graphics.setColor(COLOR.DEFAULT);
-  love.graphics.circle('fill', self.x, self.y, self.radius);
+  love.graphics.circle('line', self.x, self.y, self.radius);
 end
 
 function Projectile:is_out_of_screen()
