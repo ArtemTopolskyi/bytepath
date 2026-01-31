@@ -2,6 +2,7 @@ local ShootEffect = require "objects/ShootEffect";
 local Projectile = require "objects/Projectile";
 local AbilityTickEffect = require "objects/AbilityTickEffect";
 local TrailParticle = require "objects/TrailParticle";
+local ShipMesh = require "content/ShipMesh";
 
 local ACCELERATION_MODE = {
   NONE = 0,
@@ -11,10 +12,10 @@ local ACCELERATION_MODE = {
 
 local Player = GameObject:extend();
 
-function Player:new(area, x, y)
-  Player.super.new(self, area, 'Player', x, y);
+function Player:new(area, x, y, options)
+  Player.super.new(self, area, 'Player', x, y, options);
 
-  self.width, self.height = 10, 10;
+  self.size = 12;
 
   self.rotation = -math.pi / 2; -- rotated to the top in radians
   self.rotation_velocity = 1.66 * math.pi;
@@ -26,6 +27,8 @@ function Player:new(area, x, y)
   self.acceleration_mode = ACCELERATION_MODE.NONE;
 
   self.fire_rate = 0.48;
+
+  self.ship_mesh = ShipMesh(area, x, y, { size = self.size, parent = self });
 
   self:add_to_physics_world();
 
@@ -60,21 +63,16 @@ function Player:update(dt)
     self.velocity * math.cos(self.rotation),
     self.velocity * math.sin(self.rotation)
   );
+
+  self.ship_mesh:update(dt);
 end
 
 function Player:draw()
-  love.graphics.setColor(COLOR.DEFAULT);
-  love.graphics.circle('line', self.x, self.y, self.width);
-  love.graphics.line(
-    self.x,
-    self.y,
-    self.x + 2 * self.width * math.cos(self.rotation),
-    self.y + 2 * self.width * math.sin(self.rotation)
-  );
+  self.ship_mesh:draw();
 end
 
 function Player:shoot()
-  local offset = 1.2 * self.width;
+  local offset = 1.2 * self.size;
 
   local shoot_effect = ShootEffect(
     self.area,
@@ -115,8 +113,8 @@ function Player:spawn_trail_particle()
   self.area:add_game_object(
     TrailParticle(
       self.area,
-      self.x - self.width * math.cos(self.rotation),
-      self.y - self.width * math.sin(self.rotation),
+      self.x - self.size * math.cos(self.rotation),
+      self.y - self.size * math.sin(self.rotation),
       { color = trail_particle_color }
     )
   );
@@ -131,7 +129,7 @@ end
 
 function Player:add_to_physics_world()
   self.body = love.physics.newBody(self.area.world, self.x, self.y, 'dynamic');
-  self.shape = love.physics.newCircleShape(self.width / 2);
+  self.shape = love.physics.newCircleShape(self.size / 2);
   self.fixture = love.physics.newFixture(self.body, self.shape);
   self.fixture:setUserData(self);
 end
