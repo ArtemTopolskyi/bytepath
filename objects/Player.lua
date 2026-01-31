@@ -1,5 +1,6 @@
 local ShootEffect = require "objects/ShootEffect";
 local Projectile = require "objects/Projectile";
+local AbilityTickEffect = require "objects/AbilityTickEffect";
 
 local Player = GameObject:extend();
 
@@ -21,6 +22,8 @@ function Player:new(area, x, y)
   self.timer:every(self.fire_rate, function()
     self:shoot();
   end)
+
+  self.timer:every(1.0, function() self:ability_tick() end);
 end
 
 function Player:update(dt)
@@ -68,6 +71,17 @@ function Player:shoot()
 
   self.area:add_game_object(shoot_effect);
   self.area:add_game_object(projectile);
+end
+
+function Player:ability_tick()
+  self.area:add_game_object(
+    AbilityTickEffect(
+      self.area,
+      self.x,
+      self.y,
+      { parent = self }
+    )
+  );
 end
 
 function Player:move_camera_after_player()
