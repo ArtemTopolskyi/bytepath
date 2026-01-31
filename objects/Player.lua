@@ -33,10 +33,10 @@ function Player:update(dt)
 
   self.max_velocity = self.base_max_velocity;
 
-  if input:down('left') then self.rotation = self.rotation - self.rotation_velocity * dt end;
-  if input:down('right') then self.rotation = self.rotation + self.rotation_velocity * dt end;
-  if input:down('up') then self.max_velocity = 1.5 * self.base_max_velocity end;
-  if input:down('down') then self.max_velocity = 0.5 * self.base_max_velocity end;
+  if G.input:down('left') then self.rotation = self.rotation - self.rotation_velocity * dt end;
+  if G.input:down('right') then self.rotation = self.rotation + self.rotation_velocity * dt end;
+  if G.input:down('up') then self.max_velocity = 1.5 * self.base_max_velocity end;
+  if G.input:down('down') then self.max_velocity = 0.5 * self.base_max_velocity end;
 
   self.velocity = math.min(self.velocity + self.acceleration * dt, self.max_velocity);
 
