@@ -1,4 +1,5 @@
 Object = require "lib/classic";
+Vector = require "lib/vector";
 
 Input = require "lib/input";
 Timer = require "lib/timer";
