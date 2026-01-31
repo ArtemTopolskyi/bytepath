@@ -8,11 +8,13 @@ function Player:new(area, x, y)
   Player.super.new(self, area, 'Player', x, y);
 
   self.width, self.height = 12, 12;
-  self.speed = 150;
+
   self.rotation = -math.pi / 2; -- rotated to the top in radians
   self.rotation_velocity = 1.66 * math.pi;
+
   self.velocity = 0;
-  self.max_velocity = 150;
+  self.base_max_velocity = 150;
+  self.max_velocity = self.base_max_velocity;
   self.acceleration = 100;
 
   self.fire_rate = 0.24;
@@ -29,8 +31,12 @@ end
 function Player:update(dt)
   Player.super.update(self, dt);
 
-  if input:down('move_left') then self.rotation = self.rotation - self.rotation_velocity * dt end;
-  if input:down('move_right') then self.rotation = self.rotation + self.rotation_velocity * dt end;
+  self.max_velocity = self.base_max_velocity;
+
+  if input:down('left') then self.rotation = self.rotation - self.rotation_velocity * dt end;
+  if input:down('right') then self.rotation = self.rotation + self.rotation_velocity * dt end;
+  if input:down('up') then self.max_velocity = 1.5 * self.base_max_velocity end;
+  if input:down('down') then self.max_velocity = 0.5 * self.base_max_velocity end;
 
   self.velocity = math.min(self.velocity + self.acceleration * dt, self.max_velocity);
 

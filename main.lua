@@ -20,8 +20,10 @@ local StageScene = require "scenes/Stage";
 
 function love.load()
   input = Input();
-  input:bind('a', 'move_left');
-  input:bind('d', 'move_right');
+  input:bind('a', 'left');
+  input:bind('d', 'right');
+  input:bind('w', 'up');
+  input:bind('s', 'down');
 
   love.graphics.setDefaultFilter('nearest');
   love.graphics.setLineStyle('rough');
