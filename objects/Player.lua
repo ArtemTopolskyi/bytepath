@@ -113,8 +113,17 @@ function Player:spawn_trail_particle()
   self.area:add_game_object(
     TrailParticle(
       self.area,
-      self.x - self.size * math.cos(self.rotation),
-      self.y - self.size * math.sin(self.rotation),
+      self.x - 0.9 * self.size * math.cos(self.rotation) + 0.2 * self.size * math.cos(self.rotation - math.pi/2),
+      self.y - 0.9 * self.size * math.sin(self.rotation) + 0.2 * self.size * math.sin(self.rotation - math.pi/2),
+      { color = trail_particle_color }
+    )
+  );
+
+  self.area:add_game_object(
+    TrailParticle(
+      self.area,
+      self.x - 0.9 * self.size * math.cos(self.rotation) - 0.2 * self.size * math.cos(self.rotation - math.pi/2),
+      self.y - 0.9 * self.size * math.sin(self.rotation) - 0.2 * self.size * math.sin(self.rotation - math.pi/2),
       { color = trail_particle_color }
     )
   );
