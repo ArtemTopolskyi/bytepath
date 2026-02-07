@@ -26,6 +26,16 @@ function Player:new(area, x, y, options)
   self.acceleration = 100;
   self.acceleration_mode = ACCELERATION_MODE.NONE;
 
+  self.can_boost = true;
+  self.max_boost_amount = 100;
+  self.current_boost_amount = self.max_boost_amount;
+
+  self.max_health = 100;
+  self.health = self.max_health;
+
+  self.max_ammo = 100;
+  self.ammo = self.max_ammo;
+
   self.fire_rate = 0.48;
 
   self.ship_mesh = ShipMesh(area, x, y, { size = self.size, parent = self });
@@ -43,16 +53,23 @@ end
 function Player:update(dt)
   Player.super.update(self, dt);
 
+  self.current_boost_amount = math.min(self.current_boost_amount + 10 * dt, self.max_boost_amount);
   self.max_velocity = self.base_max_velocity;
   self.acceleration_mode = ACCELERATION_MODE.NONE;
 
   if G.input:down('left') then self.rotation = self.rotation - self.rotation_velocity * dt end;
   if G.input:down('right') then self.rotation = self.rotation + self.rotation_velocity * dt end;
-  if G.input:down('up') then
+
+  if G.input:down('up') and self.can_boost then
+    self:consume_boost(dt);
+
     self.max_velocity = 1.5 * self.base_max_velocity;
     self.acceleration_mode = ACCELERATION_MODE.ACCELERATION
   end;
-  if G.input:down('down') then
+
+  if G.input:down('down') and self.can_boost then
+    self:consume_boost(dt);
+
     self.max_velocity = 0.5 * self.base_max_velocity;
     self.acceleration_mode = ACCELERATION_MODE.DECELERATION
   end;
@@ -127,6 +144,16 @@ function Player:spawn_trail_particle()
       { color = trail_particle_color }
     )
   );
+end
+
+function Player:consume_boost(dt)
+  self.current_boost_amount = self.current_boost_amount - 50 * dt;
+
+  if self.current_boost_amount <= 0 then
+    self.can_boost = false;
+
+    self.timer:after(2.0, function() self.can_boost = true end);
+  end
 end
 
 function Player:move_camera_after_player()
