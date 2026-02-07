@@ -5,6 +5,7 @@ function AbilityTickEffect:new(area, x, y, options)
 
   self.width, self.initial_height = 48, 32;
   self.height = self.initial_height;
+  self.depth = 25;
 
   self.timer:tween(0.13, self, { height = 0 }, 'in-out-cubic', function() self.dead = true end);
 end

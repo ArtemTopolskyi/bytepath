@@ -2,6 +2,7 @@ local GameObject = Object:extend();
 
 function GameObject:new(area, label, x, y, options)
   local options = options or {};
+
   if options then for key, value in pairs(options) do self[key] = value end end
 
   self.area = area;
@@ -10,7 +11,9 @@ function GameObject:new(area, label, x, y, options)
   self.y = y;
   self.id = utils.uuid();
   self.dead = false;
+  self.depth = 0;
   self.timer = Timer();
+  self.creation_time = love.timer.getTime();
 end
 
 function GameObject:update(dt)
