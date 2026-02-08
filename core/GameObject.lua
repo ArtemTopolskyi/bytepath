@@ -49,4 +49,10 @@ function GameObject:destroy()
   self.timer = nil;
 end
 
+function GameObject:onCollisionEnter(other, my_fixture, other_fixture, contact)
+end
+
+function GameObject:onCollisionExit(other, my_fixture, other_fixture, contact)
+end
+
 return GameObject;

@@ -58,6 +58,11 @@ end
 
 function Area:add_physics_world(x_gravity, y_gravity, can_sleep)
   self.world = love.physics.newWorld(x_gravity, y_gravity, can_sleep);
+
+  self.world:setCallbacks(
+    self.onCollisionEnter,
+    self.onCollisionExit
+  );
 end
 
 function Area:get_game_objects(filter_fn)
@@ -125,6 +130,32 @@ function Area:get_closest_object(x, y, radius, labels)
   end
 
   return current_closest_object;
+end
+
+function Area.onCollisionEnter(fixture_a, fixture_b, contact)
+  local game_object_a = fixture_a:getUserData();
+  local game_object_b = fixture_b:getUserData();
+
+  if game_object_a.onCollisionEnter then
+    game_object_a:onCollisionEnter(game_object_b, fixture_a, fixture_b, contact);
+  end;
+
+  if game_object_b.onCollisionEnter then
+    game_object_b:onCollisionEnter(game_object_a, fixture_b, fixture_a, contact);
+  end;
+end
+
+function Area.onCollisionExit(fixture_a, fixture_b, contact)
+  local game_object_a = fixture_a:getUserData();
+  local game_object_b = fixture_b:getUserData();
+
+  if game_object_a.onCollisionExit then
+    game_object_a:onCollisionExit(game_object_b, fixture_a, fixture_b, contact);
+  end;
+
+  if game_object_b.onCollisionExit then
+    game_object_b:onCollisionExit(game_object_a, fixture_b, fixture_a, contact);
+  end;
 end
 
 return Area;

@@ -6,6 +6,7 @@ Timer = require "lib/timer";
 Camera = require "lib/camera";
 
 SceneManager = require "core/SceneManager";
+Scene = require "core/Scene";
 Area = require "core/Area";
 GameObject = require "core/GameObject";
 

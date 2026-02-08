@@ -1,9 +1,10 @@
 local Player = require "objects/Player";
 
-local Stage = Object:extend();
+local Stage = Scene:extend();
 
 function Stage:new()
-  self.area = Area(self);
+  Stage.super.new(self);
+
   self.area:add_physics_world();
 
   self.main_canvas = love.graphics.newCanvas(GAME_WIDTH, GAME_HEIGHT);
@@ -15,7 +16,7 @@ function Stage:new()
 end
 
 function Stage:update(dt)
-  self.area:update(dt);
+  Stage.super.update(self, dt);
 end
 
 function Stage:draw()
@@ -36,8 +37,8 @@ function Stage:draw()
 end
 
 function Stage:destroy()
-  self.area:destroy();
-  self.area = nil;
+  Stage.super.destroy(self);
+
   self.player = nil;
   self.main_canvas = nil;
   self.camera = nil;
