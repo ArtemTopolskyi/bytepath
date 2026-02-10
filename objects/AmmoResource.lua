@@ -28,6 +28,9 @@ function AmmoResource:add_collider()
   self.shape = love.physics.newRectangleShape(self.width, self.height);
   self.fixture = love.physics.newFixture(self.body, self.shape);
   self.fixture:setUserData(self);
+
+  self:setCollisionLayers(COLLISION_LAYER.PICKUP);
+  self:setCollisionMasks(COLLISION_LAYER.PLAYER);
 end
 
 return AmmoResource;

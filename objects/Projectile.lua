@@ -55,6 +55,9 @@ function Projectile:add_to_physics_world()
   self.shape = love.physics.newCircleShape(self.radius);
   self.fixture = love.physics.newFixture(self.body, self.shape);
   self.fixture:setUserData(self);
+
+  self:setCollisionLayers(COLLISION_LAYER.PROJECTILE);
+  self:setCollisionMasks(COLLISION_LAYER.PLAYER);
 end
 
 return Projectile;

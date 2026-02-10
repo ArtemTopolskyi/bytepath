@@ -168,6 +168,9 @@ function Player:add_to_physics_world()
   self.shape = love.physics.newCircleShape(self.size / 2);
   self.fixture = love.physics.newFixture(self.body, self.shape);
   self.fixture:setUserData(self);
+
+  self:setCollisionLayers(COLLISION_LAYER.PLAYER);
+  self:setCollisionMasks(COLLISION_LAYER.PICKUP, COLLISION_LAYER.PROJECTILE);
 end
 
 return Player;

@@ -55,4 +55,47 @@ end
 function GameObject:onCollisionExit(other, my_fixture, other_fixture, contact)
 end
 
+function GameObject:setCollisionLayers(...)
+  if not self.fixture then
+    error("Cannot set collision layers: fixture does not exist");
+  end
+
+  self.fixture:setCategory(...);
+end
+
+--[[
+  Love2D physics implementation uses an inverted logic for collision masks.
+  Instead of specifying which layers the object should collide with, it specifies which layers the object should ignore.
+  This setter sets the collision masks to the inverse of the layers specified.
+  This way, a mask defines which layers the object should collide with.
+]]--
+function GameObject:setCollisionMasks(...)
+  if not self.fixture then
+    error("Cannot set collision masks: fixture does not exist");
+  end
+
+  local masks = {...};
+
+  local all_layers = {};
+  for _, layer_value in pairs(COLLISION_LAYER) do
+    table.insert(all_layers, layer_value);
+  end
+
+  local masks_set = {};
+  for _, layer in ipairs(masks) do
+    masks_set[layer] = true;
+  end
+
+  local ignored_layers = {};
+  for _, layer in ipairs(all_layers) do
+    if not masks_set[layer] then
+      table.insert(ignored_layers, layer);
+    end
+  end
+
+  if #ignored_layers > 0 then
+    self.fixture:setMask(unpack(ignored_layers));
+  end
+end
+
 return GameObject;

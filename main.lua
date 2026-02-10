@@ -12,9 +12,8 @@ GameObject = require "core/GameObject";
 
 local Constants = require "lib/constants";
 
-G = {};
-
 COLOR = Constants.COLOR;
+COLLISION_LAYER = Constants.COLLISION_LAYER;
 
 fn = require "lib/functional";
 utils = require "lib/utils";
@@ -40,8 +39,10 @@ local function init_scene_manager()
 end
 
 function love.load()
-  G.input = init_input();
-  G.scene_manager = init_scene_manager();
+  G = {
+    input = init_input(),
+    scene_manager = init_scene_manager(),
+  }
 
   love.graphics.setDefaultFilter('nearest');
   love.graphics.setLineStyle('rough');
