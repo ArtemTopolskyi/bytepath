@@ -173,4 +173,8 @@ function Player:add_to_physics_world()
   self:setCollisionMasks(COLLISION_LAYER.PICKUP, COLLISION_LAYER.PROJECTILE);
 end
 
+function Player:add_ammo(amount)
+  self.ammo = math.min(self.ammo + amount, self.max_ammo);
+end
+
 return Player;

@@ -1,4 +1,3 @@
-
 local ProjectileDeathEffect = GameObject:extend();
 
 local DEATH_EFFECT_STAGE = {
