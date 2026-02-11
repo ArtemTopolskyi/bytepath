@@ -30,7 +30,6 @@ function GameObject:destroy()
   end
 
   if self.fixture then
-    self.fixture:setUserData(nil);
     self.fixture:destroy();
     self.fixture = nil;
   end
