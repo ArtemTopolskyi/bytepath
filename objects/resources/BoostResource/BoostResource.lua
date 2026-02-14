@@ -1,3 +1,5 @@
+local BoostResourcePickUpEffect = require "objects/resources/BoostResource/BoostResourcePickUpEffect";
+
 local BoostResource = GameObject:extend();
 
 function BoostResource:new(area, x, y, options)
@@ -24,7 +26,10 @@ end
 function BoostResource:draw()
   utils.push_rotate(self.x, self.y, self.body:getAngle());
   love.graphics.setColor(COLOR.BOOST);
-  love.graphics.rectangle('line', self.x - self.width / 2, self.y - self.height / 2, self.width, self.height);
+
+  love.graphics.rectangle('fill', self.x - (0.25 * self.width), self.y - (0.25 * self.height), 0.5 * self.width, 0.5 * self.height);
+  love.graphics.rectangle('line', self.x - (0.75 * self.width), self.y - (0.75 * self.height), 1.5 * self.width, 1.5 * self.height);
+
   love.graphics.pop();
 end
 
@@ -36,6 +41,20 @@ function BoostResource:add_collider()
 
   self:setCollisionLayers(COLLISION_LAYER.PICKUP);
   self:setCollisionMasks(COLLISION_LAYER.PLAYER);
+end
+
+function BoostResource:onCollisionEnter(other)
+  if other.label ~= 'Player' then return end;
+
+  other:add_boost(5);
+
+  self.dead = true;
+
+  self.area:add_game_object(
+    BoostResourcePickUpEffect(
+      self.area, self.x, self.y, { width = self.width, height = self.height }
+    )
+  );
 end
 
 return BoostResource;

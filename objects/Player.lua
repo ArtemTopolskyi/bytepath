@@ -40,7 +40,7 @@ function Player:new(area, x, y, options)
 
   self.ship_mesh = ShipMesh(area, x, y, { size = self.size, parent = self });
 
-  self:add_to_physics_world();
+  self:add_collider();
 
   self.timer:every(self.fire_rate, function()
     self:shoot();
@@ -163,7 +163,7 @@ function Player:move_camera_after_player()
   camera:move(dx, dy);
 end
 
-function Player:add_to_physics_world()
+function Player:add_collider()
   self.body = love.physics.newBody(self.area.world, self.x, self.y, 'dynamic');
   self.shape = love.physics.newCircleShape(self.size / 2);
   self.fixture = love.physics.newFixture(self.body, self.shape);
@@ -175,6 +175,10 @@ end
 
 function Player:add_ammo(amount)
   self.ammo = math.min(self.ammo + amount, self.max_ammo);
+end
+
+function Player:add_boost(amount)
+  self.current_boost_amount = math.min(self.current_boost_amount + amount, self.max_boost_amount);
 end
 
 return Player;
