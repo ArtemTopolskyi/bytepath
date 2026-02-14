@@ -10,13 +10,13 @@ function BoostResource:new(area, x, y, options)
   self.x = GAME_WIDTH / 2 + (screen_side_multiplier * (GAME_WIDTH / 2 + 48));
   self.y = utils.random_float(48, GAME_HEIGHT - 48);
 
-  self.width, self.height = 12, 12;
+  self.width, self.height = 8, 8;
   self.horizontal_velocity = -screen_side_multiplier * utils.random_float(20, 40);
 
   self:add_collider();
 
   self.body:setLinearVelocity(self.horizontal_velocity, 0);
-  self.body:applyAngularImpulse(utils.random_float(-24, 24));
+  self.body:applyAngularImpulse(utils.random_float(-12, 12));
 end
 
 function BoostResource:update(dt)

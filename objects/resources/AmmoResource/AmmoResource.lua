@@ -6,13 +6,13 @@ local AmmoResource = GameObject:extend();
 function AmmoResource:new(area, x, y, options)
   AmmoResource.super.new(self, area, 'AmmoResource', x, y, options);
 
-  self.width, self.height = 7.5, 7.5;
+  self.width, self.height = 5, 5;
   self.direction = utils.random_float(0, 2 * math.pi);
   self.velocity = utils.random_float(10, 20);
 
   self:add_collider();
 
-  self.body:applyAngularImpulse(utils.random_float(-8, 8));
+  self.body:applyAngularImpulse(utils.random_float(-4, 4));
   self.body:setLinearVelocity(
     self.velocity * math.cos(self.direction),
     self.velocity * math.sin(self.direction)
