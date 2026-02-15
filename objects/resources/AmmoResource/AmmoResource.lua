@@ -6,13 +6,13 @@ local AmmoResource = GameObject:extend();
 function AmmoResource:new(area, x, y, options)
   AmmoResource.super.new(self, area, 'AmmoResource', x, y, options);
 
-  self.width, self.height = 5, 5;
+  self.width, self.height = 8, 8;
   self.direction = utils.random_float(0, 2 * math.pi);
   self.velocity = utils.random_float(10, 20);
 
   self:add_collider();
 
-  self.body:applyAngularImpulse(utils.random_float(-4, 4));
+  self.body:applyAngularImpulse(utils.random_float(-8, 8));
   self.body:setLinearVelocity(
     self.velocity * math.cos(self.direction),
     self.velocity * math.sin(self.direction)
@@ -38,7 +38,7 @@ function AmmoResource:draw()
   utils.push_rotate(self.x, self.y, self.body:getAngle());
 
   love.graphics.setColor(COLOR.AMMO);
-  love.graphics.rectangle('line', self.x - self.width / 2, self.y - self.height / 2, self.width, self.height);
+  shapes.rhombus('fill', self.x, self.y, 0.5 * self.width, 0.5 * self.height);
 
   love.graphics.pop();
 end

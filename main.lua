@@ -17,6 +17,7 @@ COLLISION_LAYER = Constants.COLLISION_LAYER;
 
 fn = require "lib/functional";
 utils = require "lib/utils";
+shapes = require "lib/shapes";
 
 
 local function init_input()

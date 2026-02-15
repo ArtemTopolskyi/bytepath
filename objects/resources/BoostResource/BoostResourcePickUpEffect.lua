@@ -40,30 +40,27 @@ end
 function BoostResourcePickUpEffect:draw()
   if not self.is_visible then return end;
 
-  utils.push_rotate(self.x, self.y, math.pi / 4);
   love.graphics.setColor(COLOR_BY_STAGE[self.stage]);
 
   self:draw_inner_rectangle();
   self:draw_outer_rectangle();
-
-  love.graphics.pop();
 end
 
 function BoostResourcePickUpEffect:draw_inner_rectangle()
-  love.graphics.rectangle(
+  shapes.rhombus(
     'fill',
-    self.x - self.width * self.inner_rectangle_size_multiplier * 0.5,
-    self.y - self.height * self.inner_rectangle_size_multiplier * 0.5,
+    self.x,
+    self.y,
     self.width * self.inner_rectangle_size_multiplier,
     self.height * self.inner_rectangle_size_multiplier
   );
 end
 
 function BoostResourcePickUpEffect:draw_outer_rectangle()
-  love.graphics.rectangle(
+  shapes.rhombus(
     'line',
-    self.x - self.width * self.outer_rectangle_size_multiplier * 0.5,
-    self.y - self.height * self.outer_rectangle_size_multiplier * 0.5,
+    self.x,
+    self.y,
     self.width * self.outer_rectangle_size_multiplier,
     self.height * self.outer_rectangle_size_multiplier
   );

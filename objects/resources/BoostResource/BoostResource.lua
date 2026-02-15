@@ -10,13 +10,13 @@ function BoostResource:new(area, x, y, options)
   self.x = GAME_WIDTH / 2 + (screen_side_multiplier * (GAME_WIDTH / 2 + 48));
   self.y = utils.random_float(48, GAME_HEIGHT - 48);
 
-  self.width, self.height = 8, 8;
+  self.width, self.height = 12, 12;
   self.horizontal_velocity = -screen_side_multiplier * utils.random_float(20, 40);
 
   self:add_collider();
 
   self.body:setLinearVelocity(self.horizontal_velocity, 0);
-  self.body:applyAngularImpulse(utils.random_float(-12, 12));
+  self.body:applyAngularImpulse(utils.random_float(-24, 24));
 end
 
 function BoostResource:update(dt)
@@ -27,8 +27,8 @@ function BoostResource:draw()
   utils.push_rotate(self.x, self.y, self.body:getAngle());
   love.graphics.setColor(COLOR.BOOST);
 
-  love.graphics.rectangle('fill', self.x - (0.25 * self.width), self.y - (0.25 * self.height), 0.5 * self.width, 0.5 * self.height);
-  love.graphics.rectangle('line', self.x - (0.75 * self.width), self.y - (0.75 * self.height), 1.5 * self.width, 1.5 * self.height);
+  shapes.rhombus('fill', self.x, self.y, 0.5 * self.width, 0.5 * self.height);
+  shapes.rhombus('line', self.x, self.y, 1.5 * self.width, 1.5 * self.height);
 
   love.graphics.pop();
 end
