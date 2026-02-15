@@ -39,7 +39,17 @@ local function init_scene_manager()
   return scene_manager;
 end
 
+local function load_fonts()
+  return {
+    m5x7_16 = love.graphics.newFont("assets/fonts/m5x7.ttf", 16),
+  }
+end
+
 function love.load()
+  math.randomseed(os.time());
+
+  fonts = load_fonts();
+
   G = {
     input = init_input(),
     scene_manager = init_scene_manager(),

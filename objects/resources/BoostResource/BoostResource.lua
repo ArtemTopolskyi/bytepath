@@ -1,4 +1,5 @@
 local BoostResourcePickUpEffect = require "objects/resources/BoostResource/BoostResourcePickUpEffect";
+local InfoText = require "objects/InfoText";
 
 local BoostResource = GameObject:extend();
 
@@ -55,6 +56,8 @@ function BoostResource:onCollisionEnter(other)
       self.area, self.x, self.y, { width = self.width, height = self.height }
     )
   );
+
+  self.area:add_game_object(InfoText(self.area, self.x, self.y, { text = "+BOOST" }));
 end
 
 return BoostResource;
