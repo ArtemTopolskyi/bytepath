@@ -1,3 +1,5 @@
+local utf8 = require "utf8";
+
 local uuid = function()
   local fn = function(x)
       local r = love.math.random(16) - 1
@@ -21,6 +23,16 @@ local random_float = function(min, max)
   );
 end
 
+local utf8sub = function(str, start_index, end_index)
+  local start_byte_offset = utf8.offset(str, start_index);
+  local end_byte_offset = utf8.offset(str, end_index + 1);
+
+  if start_byte_offset and end_byte_offset then return string.sub(str, start_byte_offset, end_byte_offset - 1) end
+  if start_byte_offset then return string.sub(str, start_byte_offset) end
+
+  return ""
+end
+
 local push_rotate = function(x, y, r)
   love.graphics.push()
   love.graphics.translate(x, y)
@@ -42,4 +54,5 @@ return {
   random_float = random_float,
   push_rotate = push_rotate,
   push_rotate_scale = push_rotate_scale,
+  utf8sub = utf8sub,
 };
