@@ -83,7 +83,7 @@ function InfoText:draw_cells()
       0, -- orientation in radians
       1, -- scale x
       1, -- scale y
-      1, -- origin offset x
+      0, -- origin offset x
       self.font:getHeight() / 2 -- origin offset y
     );
 
