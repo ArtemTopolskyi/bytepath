@@ -5,6 +5,7 @@ local COLOR = {
   BOOST = { love.math.colorFromBytes(76, 195, 217) },
   HEALTH = { love.math.colorFromBytes(241, 103, 69) },
   SKILL_POINT = { love.math.colorFromBytes(255, 198, 93) },
+  TRANSPARENT = { 1, 1, 1, 0 },
 }
 
 -- Available values: 1-16 inclusive
