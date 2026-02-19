@@ -6,6 +6,7 @@ function InfoText:new(area, x, y, options)
   self.visible = true;
   self.depth = 30;
   self.font = fonts.m5x7_16;
+  self.color = options.color or COLOR.DEFAULT;
 
   self.all_available_colors = self:generate_all_available_colors();
 
@@ -26,7 +27,6 @@ function InfoText:draw()
   if not self.visible then return end;
 
   love.graphics.setFont(self.font);
-  love.graphics.setColor(COLOR.DEFAULT);
 
   self:draw_cells();
 end
@@ -53,7 +53,7 @@ function InfoText:text_to_cells(text)
       cells,
       {
         char = text:sub(i, i),
-        foreground_color = COLOR.DEFAULT,
+        foreground_color = self.color,
         background_color = COLOR.TRANSPARENT,
       }
     )

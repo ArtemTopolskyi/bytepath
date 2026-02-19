@@ -57,7 +57,7 @@ function BoostResource:onCollisionEnter(other)
     )
   );
 
-  self.area:add_game_object(InfoText(self.area, self.x, self.y, { text = "+BOOST" }));
+  self.area:add_game_object(InfoText(self.area, self.x, self.y, { text = "+BOOST", color = COLOR.BOOST }));
 end
 
 return BoostResource;

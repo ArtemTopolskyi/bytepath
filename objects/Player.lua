@@ -181,4 +181,8 @@ function Player:add_boost(amount)
   self.current_boost_amount = math.min(self.current_boost_amount + amount, self.max_boost_amount);
 end
 
+function Player:add_health(amount)
+  self.health = math.min(self.health + amount, self.max_health);
+end
+
 return Player;
