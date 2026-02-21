@@ -3,6 +3,8 @@ local Projectile = require "objects/Projectile/Projectile";
 local AbilityTickEffect = require "objects/Player/AbilityTickEffect";
 local TrailParticle = require "objects/Player/TrailParticle";
 local ShipMesh = require "content/ShipMesh";
+local ATTACK_TYPE = require "modules.attack.attack_type";
+local attack_stats = require "modules.attack.attack_stats";
 
 local ACCELERATION_MODE = {
   NONE = 0,
@@ -33,25 +35,26 @@ function Player:new(area, x, y, options)
   self.max_health = 100;
   self.health = self.max_health;
 
+  self.attack_type = ATTACK_TYPE.NEUTRAL;
+  self.attack_cooldown = attack_stats[self.attack_type].cooldown;
+  self.attack_timer = 0;
+
   self.max_ammo = 100;
   self.ammo = self.max_ammo;
-
-  self.fire_rate = 0.48;
 
   self.ship_mesh = ShipMesh(area, x, y, { size = self.size, parent = self });
 
   self:add_collider();
 
-  self.timer:every(self.fire_rate, function()
-    self:shoot();
-  end)
-
   self.timer:every(1.0, function() self:ability_tick() end);
   self.timer:every(0.01, function() self:spawn_trail_particle() end);
 end
 
+
 function Player:update(dt)
   Player.super.update(self, dt);
+
+  self:update_attack_timer(dt);
 
   self.current_boost_amount = math.min(self.current_boost_amount + 10 * dt, self.max_boost_amount);
   self.max_velocity = self.base_max_velocity;
@@ -84,9 +87,28 @@ function Player:update(dt)
   self.ship_mesh:update(dt);
 end
 
+
 function Player:draw()
   self.ship_mesh:draw();
 end
+
+
+function Player:set_attack_type(attack_type)
+  self.attack_type = attack_type;
+  self.ammo = self.max_ammo;
+  self.fire_rate = attack_stats[attack_type].fire_rate;
+end
+
+
+function Player:update_attack_timer(dt)
+  self.attack_timer = self.attack_timer + dt;
+
+  if self.attack_timer >= self.attack_cooldown then
+    self.attack_timer = 0;
+    self:shoot();
+  end
+end
+
 
 function Player:shoot()
   local offset = 1.2 * self.size;
@@ -109,6 +131,7 @@ function Player:shoot()
   self.area:add_game_object(projectile);
 end
 
+
 function Player:ability_tick()
   self.area:add_game_object(
     AbilityTickEffect(
@@ -119,6 +142,7 @@ function Player:ability_tick()
     )
   );
 end
+
 
 function Player:spawn_trail_particle()
   local trail_particle_color = (
@@ -146,6 +170,7 @@ function Player:spawn_trail_particle()
   );
 end
 
+
 function Player:consume_boost(dt)
   self.current_boost_amount = self.current_boost_amount - 50 * dt;
 
@@ -156,12 +181,14 @@ function Player:consume_boost(dt)
   end
 end
 
+
 function Player:move_camera_after_player()
   local camera = self.area.scene.camera;
   local dx, dy = self.x - camera.x, self.y - camera.y;
 
   camera:move(dx, dy);
 end
+
 
 function Player:add_collider()
   self.body = love.physics.newBody(self.area.world, self.x, self.y, 'dynamic');
@@ -173,16 +200,20 @@ function Player:add_collider()
   self:setCollisionMasks(COLLISION_LAYER.PICKUP, COLLISION_LAYER.PROJECTILE);
 end
 
+
 function Player:add_ammo(amount)
   self.ammo = math.min(self.ammo + amount, self.max_ammo);
 end
+
 
 function Player:add_boost(amount)
   self.current_boost_amount = math.min(self.current_boost_amount + amount, self.max_boost_amount);
 end
 
+
 function Player:add_health(amount)
   self.health = math.min(self.health + amount, self.max_health);
 end
+
 
 return Player;

@@ -1,3 +1,5 @@
+local BoostResource = require "objects/resources/BoostResource/BoostResource";
+local HealthResource = require "objects/resources/HealthResource/HealthResource";
 local Player = require "objects/Player/Player";
 
 local Stage = Scene:extend();
@@ -13,6 +15,11 @@ function Stage:new()
   self.player = Player(self.area, GAME_WIDTH / 2, GAME_HEIGHT / 2);
 
   self.area:add_game_object(self.player);
+
+  G.input:bind('space', function()
+    self.area:add_game_object(BoostResource(self.area, utils.random_float(0, GAME_WIDTH), utils.random_float(0, GAME_HEIGHT)));
+    self.area:add_game_object(HealthResource(self.area, utils.random_float(0, GAME_WIDTH), utils.random_float(0, GAME_HEIGHT)));
+  end)
 end
 
 function Stage:update(dt)
