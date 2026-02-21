@@ -1,5 +1,6 @@
 
 local InfoText = require "objects/InfoText";
+local HealthResourcePickUpEffect = require "objects/resources/HealthResource/HealthResourcePickUpEffect";
 
 local HealthResource = GameObject:extend();
 
@@ -52,7 +53,15 @@ function HealthResource:onCollisionEnter(other)
 
   self.dead = true;
 
-  self.area:add_game_object(InfoText(self.area, self.x, self.y, { text = "+HP", color = COLOR.HEALTH }));
+  self.area:add_game_object(
+    InfoText(
+      self.area,
+      self.x + utils.random_float(-16, 16),
+      self.y + utils.random_float(-16, 16),
+      { text = "+HP", color = COLOR.HEALTH }
+    )
+  );
+  self.area:add_game_object(HealthResourcePickUpEffect(self.area, self.x, self.y, { width = self.width, height = self.height }));
 end
 
 return HealthResource;

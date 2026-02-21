@@ -53,6 +53,7 @@ function love.load()
   G = {
     input = init_input(),
     scene_manager = init_scene_manager(),
+    timer = Timer(),
   }
 
   love.graphics.setDefaultFilter('nearest');
@@ -64,6 +65,7 @@ function love.load()
 end
 
 function love.update(dt)
+  G.timer:update(dt);
   G.scene_manager:update(dt);
 end
 
