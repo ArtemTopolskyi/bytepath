@@ -46,12 +46,13 @@ function Player:new(area, x, y, options)
 
   self.ship_mesh = ShipMesh(area, x, y, { size = self.size, parent = self });
 
+  self:set_attack_type(ATTACK_TYPE.NEUTRAL);
+
   self:add_collider();
 
   self.timer:every(1.0, function() self:ability_tick() end);
   self.timer:every(0.01, function() self:spawn_trail_particle() end);
 end
-
 
 function Player:update(dt)
   Player.super.update(self, dt);
@@ -89,18 +90,15 @@ function Player:update(dt)
   self.ship_mesh:update(dt);
 end
 
-
 function Player:draw()
   self.ship_mesh:draw();
 end
 
-
 function Player:set_attack_type(attack_type)
   self.attack_type = attack_type;
   self.ammo = self.max_ammo;
-  self.fire_rate = attack_stats[attack_type].fire_rate;
+  self.attack_cooldown = attack_stats[attack_type].cooldown;
 end
-
 
 function Player:update_attack_timer(dt)
   self.attack_timer = self.attack_timer + dt;
@@ -111,28 +109,66 @@ function Player:update_attack_timer(dt)
   end
 end
 
-
 function Player:shoot()
   local offset = 1.2 * self.size;
 
-  local shoot_effect = ShootEffect(
-    self.area,
-    self.x + offset * math.cos(self.rotation),
-    self.y + offset * math.sin(self.rotation),
-    { player = self, offset = offset }
+  if self.attack_type == ATTACK_TYPE.NEUTRAL then
+    self:shoot_neutral_attack();
+  elseif self.attack_type == ATTACK_TYPE.DOUBLE then
+    self:shoot_double_attack();
+  end
+
+  self.area:add_game_object(
+    ShootEffect(
+      self.area,
+      self.x + offset * math.cos(self.rotation),
+      self.y + offset * math.sin(self.rotation),
+      { player = self, offset = offset }
+    )
   );
 
-  local projectile = Projectile(
-    self.area,
-    self.x + 1.5 * offset * math.cos(self.rotation),
-    self.y + 1.5 * offset * math.sin(self.rotation),
-    { direction = self.rotation }
-  );
-
-  self.area:add_game_object(shoot_effect);
-  self.area:add_game_object(projectile);
+  if self.ammo <= 0 then self:set_attack_type(ATTACK_TYPE.NEUTRAL) end
 end
 
+function Player:shoot_neutral_attack()
+  local offset = 1.2 * self.size;
+
+  self.area:add_game_object(
+    Projectile(
+      self.area,
+      self.x + 1.5 * offset * math.cos(self.rotation),
+      self.y + 1.5 * offset * math.sin(self.rotation),
+      { direction = self.rotation }
+    )
+  );
+end
+
+function Player:shoot_double_attack()
+  local double_attack_stats = attack_stats[ATTACK_TYPE.DOUBLE];
+  local offset = 1.2 * self.size;
+
+  self.ammo = math.max(self.ammo - double_attack_stats.ammo_consumption, 0);
+
+  local top_projectile_direction = self.rotation + math.pi / 12;
+  local bottom_projectile_direction = self.rotation - math.pi / 12;
+
+  self.area:add_game_object(
+    Projectile(
+      self.area,
+      self.x + 1.5 * offset * math.cos(top_projectile_direction),
+      self.y + 1.5 * offset * math.sin(top_projectile_direction),
+      { direction = top_projectile_direction, color = double_attack_stats.color }
+    )
+  );
+  self.area:add_game_object(
+    Projectile(
+      self.area,
+      self.x + 1.5 * offset * math.cos(bottom_projectile_direction),
+      self.y + 1.5 * offset * math.sin(bottom_projectile_direction),
+      { direction = bottom_projectile_direction, color = double_attack_stats.color }
+    )
+  );
+end
 
 function Player:ability_tick()
   self.area:add_game_object(
@@ -144,7 +180,6 @@ function Player:ability_tick()
     )
   );
 end
-
 
 function Player:spawn_trail_particle()
   local trail_particle_color = (
@@ -172,7 +207,6 @@ function Player:spawn_trail_particle()
   );
 end
 
-
 function Player:consume_boost(dt)
   self.current_boost_amount = self.current_boost_amount - 50 * dt;
 
@@ -183,14 +217,12 @@ function Player:consume_boost(dt)
   end
 end
 
-
 function Player:move_camera_after_player()
   local camera = self.area.scene.camera;
   local dx, dy = self.x - camera.x, self.y - camera.y;
 
   camera:move(dx, dy);
 end
-
 
 function Player:add_collider()
   self.body = love.physics.newBody(self.area.world, self.x, self.y, 'dynamic');
@@ -202,20 +234,16 @@ function Player:add_collider()
   self:setCollisionMasks(COLLISION_LAYER.PICKUP, COLLISION_LAYER.PROJECTILE);
 end
 
-
 function Player:add_ammo(amount)
   self.ammo = math.min(self.ammo + amount, self.max_ammo);
 end
-
 
 function Player:add_boost(amount)
   self.current_boost_amount = math.min(self.current_boost_amount + amount, self.max_boost_amount);
 end
 
-
 function Player:add_health(amount)
   self.health = math.min(self.health + amount, self.max_health);
 end
-
 
 return Player;
