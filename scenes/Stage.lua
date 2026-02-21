@@ -1,4 +1,4 @@
-local Player = require "objects/Player";
+local Player = require "objects/Player/Player";
 
 local Stage = Scene:extend();
 

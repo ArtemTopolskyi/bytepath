@@ -1,5 +1,5 @@
 local BoostResourcePickUpEffect = require "objects/resources/BoostResource/BoostResourcePickUpEffect";
-local InfoText = require "objects/InfoText";
+local InfoText = require "objects/ui/InfoText";
 
 local BoostResource = GameObject:extend();
 

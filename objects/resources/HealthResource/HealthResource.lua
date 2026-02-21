@@ -1,5 +1,4 @@
-
-local InfoText = require "objects/InfoText";
+local InfoText = require "objects/ui/InfoText";
 local HealthResourcePickUpEffect = require "objects/resources/HealthResource/HealthResourcePickUpEffect";
 
 local HealthResource = GameObject:extend();

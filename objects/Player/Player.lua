@@ -1,7 +1,7 @@
-local ShootEffect = require "objects/ShootEffect";
+local ShootEffect = require "objects/Player/ShootEffect";
 local Projectile = require "objects/Projectile/Projectile";
-local AbilityTickEffect = require "objects/AbilityTickEffect";
-local TrailParticle = require "objects/TrailParticle";
+local AbilityTickEffect = require "objects/Player/AbilityTickEffect";
+local TrailParticle = require "objects/Player/TrailParticle";
 local ShipMesh = require "content/ShipMesh";
 
 local ACCELERATION_MODE = {
