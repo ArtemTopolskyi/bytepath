@@ -1,3 +1,5 @@
+local COLOR = require "modules.ui.color";
+
 local TrailParticle = GameObject:extend();
 
 function TrailParticle:new(area, x, y, options)

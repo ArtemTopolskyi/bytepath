@@ -1,3 +1,5 @@
+local COLOR = require "modules.ui.color";
+local COLLISION_LAYER = require "modules.physics.collision_layer";
 local InfoText = require "objects/ui/InfoText";
 local HealthResourcePickUpEffect = require "objects/resources/HealthResource/HealthResourcePickUpEffect";
 

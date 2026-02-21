@@ -1,3 +1,5 @@
+local COLOR = require "modules.ui.color";
+
 local AbilityTickEffect = GameObject:extend();
 
 function AbilityTickEffect:new(area, x, y, options)

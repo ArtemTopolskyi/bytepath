@@ -1,3 +1,5 @@
+local COLOR = require "modules.ui.color";
+local COLLISION_LAYER = require "modules.physics.collision_layer";
 local ExplodeParticle = require "objects/effects/ExplodeParticle";
 local AmmoResourceDeathEffect = require "objects/resources/AmmoResource/AmmoResourceDeathEffect";
 

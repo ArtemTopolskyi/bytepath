@@ -1,3 +1,5 @@
+local COLLISION_LAYER = require "modules.physics.collision_layer";
+
 local GameObject = Object:extend();
 
 function GameObject:new(area, label, x, y, options)

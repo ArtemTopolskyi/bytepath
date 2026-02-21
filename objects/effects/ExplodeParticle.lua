@@ -1,3 +1,5 @@
+local COLOR = require "modules.ui.color";
+
 local ExplodeParticle = GameObject:extend();
 
 function ExplodeParticle:new(area, x, y, options)

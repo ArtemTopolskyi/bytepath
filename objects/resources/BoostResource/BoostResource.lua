@@ -1,3 +1,5 @@
+local COLOR = require "modules.ui.color";
+local COLLISION_LAYER = require "modules.physics.collision_layer";
 local BoostResourcePickUpEffect = require "objects/resources/BoostResource/BoostResourcePickUpEffect";
 local InfoText = require "objects/ui/InfoText";
 

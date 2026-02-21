@@ -1,3 +1,5 @@
+local COLOR = require "modules.ui.color";
+
 local ShipMesh = GameObject:extend();
 
 function ShipMesh:new(area, x, y, options)

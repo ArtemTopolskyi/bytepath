@@ -1,3 +1,5 @@
+local COLOR = require "modules.ui.color";
+
 local ProjectileDeathEffect = GameObject:extend();
 
 local DEATH_EFFECT_STAGE = {

@@ -1,3 +1,4 @@
+local COLOR = require "modules.ui.color";
 local ATTACK_TYPE = require "modules.attack.attack_type";
 
 local attack_stats = {
@@ -6,6 +7,13 @@ local attack_stats = {
     color = COLOR.DEFAULT,
     ammo_consumption = 0,
     abbreviation = 'N',
+  },
+
+  [ATTACK_TYPE.DOUBLE] = {
+    cooldown = 0.32,
+    color = COLOR.AMMO,
+    ammo_consumption = 2,
+    abbreviation = '2',
   },
 }
 

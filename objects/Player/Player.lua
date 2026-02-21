@@ -1,3 +1,5 @@
+local COLOR = require "modules.ui.color";
+local COLLISION_LAYER = require "modules.physics.collision_layer";
 local ShootEffect = require "objects/Player/ShootEffect";
 local Projectile = require "objects/Projectile/Projectile";
 local AbilityTickEffect = require "objects/Player/AbilityTickEffect";

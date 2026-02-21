@@ -10,11 +10,6 @@ Scene = require "core/Scene";
 Area = require "core/Area";
 GameObject = require "core/GameObject";
 
-local Constants = require "lib/constants";
-
-COLOR = Constants.COLOR;
-COLLISION_LAYER = Constants.COLLISION_LAYER;
-
 fn = require "lib/functional";
 utils = require "lib/utils";
 shapes = require "lib/shapes";

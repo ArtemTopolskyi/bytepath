@@ -8,14 +8,4 @@ local COLOR = {
   TRANSPARENT = { 1, 1, 1, 0 },
 }
 
--- Available values: 1-16 inclusive
-local COLLISION_LAYER = {
-  PLAYER = 1,
-  PROJECTILE = 2,
-  PICKUP = 3,
-}
-
-return {
-  COLOR = COLOR,
-  COLLISION_LAYER = COLLISION_LAYER,
-};
+return COLOR;

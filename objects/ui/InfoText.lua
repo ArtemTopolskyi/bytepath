@@ -1,3 +1,5 @@
+local COLOR = require "modules.ui.color";
+
 local InfoText = GameObject:extend();
 
 function InfoText:new(area, x, y, options)

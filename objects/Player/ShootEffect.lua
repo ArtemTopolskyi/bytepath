@@ -1,3 +1,5 @@
+local COLOR = require "modules.ui.color";
+
 local ShootEffect = GameObject:extend();
 
 function ShootEffect:new(area, x, y, options)

@@ -1,3 +1,5 @@
+local COLOR = require "modules.ui.color";
+local COLLISION_LAYER = require "modules.physics.collision_layer";
 local ProjectileDeathEffect = require "objects/Projectile/ProjectileDeathEffect";
 
 local Projectile = GameObject:extend();

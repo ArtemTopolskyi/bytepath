@@ -1,3 +1,5 @@
+local COLOR = require "modules.ui.color";
+
 local HealthResourcePickUpEffect = GameObject:extend();
 
 local EFFECT_STAGE = {

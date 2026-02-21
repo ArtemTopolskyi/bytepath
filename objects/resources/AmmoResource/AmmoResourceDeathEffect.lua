@@ -1,3 +1,5 @@
+local COLOR = require "modules.ui.color";
+
 local AmmoResourceDeathEffect = GameObject:extend();
 
 local DEATH_EFFECT_STAGE = {
