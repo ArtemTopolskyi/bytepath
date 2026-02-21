@@ -1,5 +1,5 @@
 local ShootEffect = require "objects/ShootEffect";
-local Projectile = require "objects/Projectile";
+local Projectile = require "objects/Projectile/Projectile";
 local AbilityTickEffect = require "objects/AbilityTickEffect";
 local TrailParticle = require "objects/TrailParticle";
 local ShipMesh = require "content/ShipMesh";

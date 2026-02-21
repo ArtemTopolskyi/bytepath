@@ -201,6 +201,10 @@ function vector:angleTo(other)
 	return atan2(self.y, self.x)
 end
 
+function vector:angle()
+	return atan2(self.y, self.x)
+end
+
 function vector:trimmed(maxLen)
 	return self:clone():trimInplace(maxLen)
 end
