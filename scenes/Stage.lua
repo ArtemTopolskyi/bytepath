@@ -1,6 +1,6 @@
 local BoostResource = require "objects/resources/BoostResource/BoostResource";
 local HealthResource = require "objects/resources/HealthResource/HealthResource";
-local Player = require "objects/Player/Player";
+local Player = require "modules.player.player";
 
 local Stage = Scene:extend();
 
