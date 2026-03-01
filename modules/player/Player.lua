@@ -161,7 +161,11 @@ function Player:add_collider()
   self.fixture:setUserData(self);
 
   self:setCollisionLayers(COLLISION_LAYER.PLAYER);
-  self:setCollisionMasks(COLLISION_LAYER.PICKUP, COLLISION_LAYER.PROJECTILE);
+  self:setCollisionMasks(
+    COLLISION_LAYER.PICKUP,
+    COLLISION_LAYER.PROJECTILE,
+    COLLISION_LAYER.ENEMY
+  );
 end
 
 return Player;
